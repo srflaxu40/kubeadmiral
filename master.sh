@@ -3,7 +3,7 @@
 # RUN with sudo
 
 apt-get install -y python-pip python-dev build-essential 
-pip install -y --upgrade pip
+pip install --upgrade pip
 pip install awscli
 
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg |  apt-key add -

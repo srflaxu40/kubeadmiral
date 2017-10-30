@@ -1,5 +1,11 @@
 #!/bin/bash
- curl -fsSL https://download.docker.com/linux/ubuntu/gpg |  apt-key add -
+
+# RUN with sudo
+apt-get install -y python-pip python-dev build-essential 
+pip install --upgrade pip 
+pip install awscli
+
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg |  apt-key add -
 
 add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
 
@@ -33,8 +39,8 @@ mkdir -p /etc/kubernetes/
 
 cat <<EOF >/etc/kubernetes/pki/cloud-config
 [Global]
-KubernetesClusterTag=kubernetes-$ENVIRONMENT
-KubernetesClusterID=kubernetes-$ENVIRONMENT
+KubernetesClusterTag=kubernetes-development
+KubernetesClusterID=kubernetes-development
 EOF
 
 chmod 0755 /etc/kubernetes/pki/cloud-config
@@ -54,5 +60,17 @@ ExecStart=/usr/bin/kubelet $KUBELET_KUBECONFIG_ARGS $KUBELET_SYSTEM_PODS_ARGS $K
 EOF
 
 
-kubeadm join --token ${TOKEN} ${MASTER_IP}:6443 --discovery-token-ca-cert-hash sha256:$DISCOVERY_TOKEN_HASH
+kubeadm join --token 2af9df.f071918a8a0034ff 10.1.2.15:6443 --discovery-token-ca-cert-hash sha256:4c075af937dda5a702393c38dfca7e2a7f88de8083ddca65dc29035ea4733437
+
+aws s3 cp s3://statengine-devops/development-admin.conf ./admin.conf
+
+export KUBECONFIG=./admin.conf
+
+NODE_HOST=`cat /etc/hostname`
+
+kubectl label nodes $NODE_HOST cluster-type=default
+kubectl label nodes $NODE_HOST environment=development
+kubectl label nodes $NODE_HOST role=minion
+kubectl label nodes $NODE_HOST name=kubernetes-minion-development
+
 
