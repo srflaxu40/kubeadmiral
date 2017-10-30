@@ -51,8 +51,8 @@ mkdir -p /etc/kubernetes/
 
 cat <<EOF >/etc/kubernetes/pki/cloud-config
 [Global]
-KubernetesClusterTag=kubernetes-development
-KubernetesClusterID=kubernetes-development
+KubernetesClusterTag=kubernetes-$ENVIRONMENT
+KubernetesClusterID=kubernetes-$ENVIRONMENT
 EOF
 
 chmod 0755 /etc/kubernetes/pki/cloud-config
@@ -78,7 +78,7 @@ mkdir -p $HOME/.kube
 cp /etc/kubernetes/admin.conf $HOME/.kube/config
 chown $(id -u):$(id -g) $HOME/.kube/config
 
-aws s3 cp /etc/kubernetes/admin.conf s3://statengine-devops/development-admin.conf
+aws s3 cp /etc/kubernetes/admin.conf s3://statengine-devops/$ENVIRONMENT-admin.conf
 
 kubectl --kubeconfig /etc/kubernetes/admin.conf apply -f https://docs.projectcalico.org/v2.6/getting-started/kubernetes/installation/hosted/kubeadm/1.6/calico.yaml
 

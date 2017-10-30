@@ -33,8 +33,8 @@ mkdir -p /etc/kubernetes/
 
 cat <<EOF >/etc/kubernetes/pki/cloud-config
 [Global]
-KubernetesClusterTag=kubernetes-development
-KubernetesClusterID=kubernetes-development
+KubernetesClusterTag=kubernetes-$ENVIRONMENT
+KubernetesClusterID=kubernetes-$ENVIRONMENT
 EOF
 
 chmod 0755 /etc/kubernetes/pki/cloud-config
@@ -54,5 +54,5 @@ ExecStart=/usr/bin/kubelet $KUBELET_KUBECONFIG_ARGS $KUBELET_SYSTEM_PODS_ARGS $K
 EOF
 
 
-kubeadm join --token 5dc093.bbeacd16341abf41 10.1.2.15:6443 --discovery-token-ca-cert-hash sha256:4c075af937dda5a702393c38dfca7e2a7f88de8083ddca65dc29035ea4733437
+kubeadm join --token ${TOKEN} ${MASTER_IP}:6443 --discovery-token-ca-cert-hash sha256:$DISCOVERY_TOKEN_HASH
 
