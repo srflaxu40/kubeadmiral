@@ -1,16 +1,12 @@
 #!/bin/bash
 
 # RUN with sudo
-
-apt-get install -y python-pip python-dev build-essential 
-pip install --upgrade pip
-pip install awscli
-
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg |  apt-key add -
 
 add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
 
 apt-get update
+apt install -y awscli
 
 apt-cache policy docker-ce
 
