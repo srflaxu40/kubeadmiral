@@ -36,8 +36,8 @@ mkdir -p /etc/kubernetes/
 
 cat <<EOF >/etc/kubernetes/pki/cloud-config
 [Global]
-KubernetesClusterTag=kubernetes-$ENVIRONMENT
-KubernetesClusterID=kubernetes-$ENVIRONMENT
+KubernetesClusterTag=kubernetes
+KubernetesClusterID=kubernetes
 EOF
 
 chmod 0755 /etc/kubernetes/pki/cloud-config
