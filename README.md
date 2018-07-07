@@ -1,6 +1,6 @@
 # kubeadm
 
-These scripts are utilized to stand up a mastser, and to join nodes to the master.  Currently, it is being
+These scripts are utilized to stand up a master, and to join nodes to the master.  Currently, it is being
 used in SpotInst for the kubernetes-redis-cluster project.
 
 ## Notes:
